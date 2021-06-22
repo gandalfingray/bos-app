@@ -1,0 +1,32 @@
+server:
+  port: 8080
+---
+debug: true
+server:
+  port: 9091
+spring:
+  profiles: default
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mydatabase
+    username: root
+    password: root
+  session:
+    store-type: redis
+  redis:
+    port: 6379
+    host: 127.0.0.1
+    lettuce:
+      pool:
+        max-active: 5
+        max-idle: 10
+        min-idle: 2
+mybatis:
+  mapper-locations: mybatis-mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.mintit.bos.**.model
+logging:
+  level:
+    root: info
+    com.mintit.bos: debug

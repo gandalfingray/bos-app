@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mintit.bos.comcode.persistence.CommCodeMapper">
+
+    <select id="selectComCodeByCodeGrp" resultType="CommCode">
+        SELECT comm_cd_grp
+            ,comm_cd
+            ,comm_nm
+            ,ref_cd1
+            ,ref_cd2
+            ,ref_cd3
+            ,deflt_yn
+            ,rmrk
+            ,sort_no
+            ,use_yn
+            ,sys_use_yn
+            ,inpt_menu_id
+            ,regr_id
+            ,DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%S') reg_date
+            ,chgr_id
+            ,DATE_FORMAT(chg_date, '%Y-%m-%d %H:%i:%S') chg_date
+            ,(select
+                count(comm_cd_grp)
+              from tsycd_comm_cd_dtl
+              where comm_cd_grp = a.comm_cd ) children
+        FROM tsycd_comm_cd_dtl a
+        WHERE comm_cd_grp = #{commCdGrp}
+    </select>
+
+    <select id="selectAll" resultType="CommCode">
+        SELECT comm_cd_grp
+            ,comm_cd
+            ,comm_nm
+            ,ref_cd1
+            ,ref_cd2
+            ,ref_cd3
+            ,deflt_yn
+            ,rmrk
+            ,sort_no
+            ,use_yn
+            ,sys_use_yn
+            ,inpt_menu_id
+            ,regr_id
+            ,DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%S') reg_date
+            ,chgr_id
+            ,DATE_FORMAT(chg_date, '%Y-%m-%d %H:%i:%S') chg_date
+        FROM tsycd_comm_cd_dtl
+    </select>
+
+    <select id="selectCommCodesWithinAPage" parameterType="java.util.HashMap" resultType="CommCode">
+        SELECT *
+        FROM(
+           SELECT comm_cd_grp
+            ,comm_cd
+            ,comm_nm
+            ,ref_cd1
+            ,ref_cd2
+            ,ref_cd3
+            ,deflt_yn
+            ,rmrk
+            ,sort_no
+            ,use_yn
+            ,sys_use_yn
+            ,inpt_menu_id
+            ,regr_id
+            ,DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%S') reg_date
+            ,chgr_id
+            ,DATE_FORMAT(chg_date, '%Y-%m-%d %H:%i:%S') chg_date
+           FROM tsycd_comm_cd_dtl
+        ) T1
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT COUNT(comm_cd_grp)
+        FROM tsycd_comm_cd_dtl
+    </select>
+
+    <insert id="insertCommCode" parameterType="CommCode">
+        INSERT INTO tsycd_comm_cd_dtl (
+             comm_cd_grp
+            ,comm_cd
+            ,comm_nm
+            ,ref_cd1
+            ,ref_cd2
+            ,ref_cd3
+            ,deflt_yn
+            ,rmrk
+            ,sort_no
+            ,use_yn
+            ,sys_use_yn
+            ,inpt_menu_id
+            ,regr_id
+            ,reg_date
+            ,chgr_id
+            ,chg_date
+        )
+        VALUES (
+            #{commCdGrp}
+            ,#{commCd}
+            ,#{commNm}
+            ,#{refCd1}
+            ,#{refCd2}
+            ,#{refCd3}
+            ,#{defltYn}
+            ,#{rmrk}
+            ,#{sortNo}
+            ,#{useYn}
+            ,#{sysUseYn}
+            ,#{inptMenuId}
+            ,#{regrId}
+            ,now()
+            ,#{chgrId}
+            ,now()
+        )
+    </insert>
+
+    <update id="updateCommCode" parameterType="CommCode">
+        UPDATE tsycd_comm_cd_dtl
+        <set>
+            <if test="commNm != null"> comm_nm = #{commNm}, </if>
+            <if test="refCd1 != null"> ref_cd1 = #{refCd1}, </if>
+            <if test="refCd2 != null"> ref_cd2 = #{refCd2}, </if>
+            <if test="refCd3 != null"> ref_cd3 = #{refCd3}, </if>
+            <if test="defltYn != null"> deflt_yn = #{defltYn}, </if>
+            <if test="rmrk != null"> rmrk	 = #{rmrk}, </if>
+            <if test="sortNo != null"> sort_no = #{sortNo}, </if>
+            <if test="useYn != null"> use_yn = #{useYn}, </if>
+            <if test="sysUseYn != null"> sys_use_yn = #{sysUseYn}, </if>
+            <if test="inptMenuId != null"> inpt_menu_id	 = #{inptMenuId}, </if>
+            <if test="chgrId != null"> chgr_id	= #{chgrId}, </if>
+            <if test="true" > chg_date	 = now(), </if>
+        </set>
+        WHERE comm_cd = #{commCd}
+    </update>
+
+</mapper>

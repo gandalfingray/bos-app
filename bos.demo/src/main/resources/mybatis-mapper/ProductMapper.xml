@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mintit.bos.demo.persistence.ProductMapper">
+
+    <select id="selectProductById" resultType="Product">
+        SELECT prod_id
+        ,prod_name
+        ,prod_price
+        ,spec
+        ,model_name
+        ,DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%S') reg_date
+        FROM products
+        WHERE prod_id = #{prodId}
+    </select>
+
+    <select id="selectAllProducts" resultType="Product">
+        SELECT prod_id
+        ,prod_name
+        ,prod_price
+        ,spec
+        ,model_name
+        ,DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%S') reg_date
+        FROM products
+    </select>
+
+    <select id="selectProductsWithinAPage" parameterType="java.util.HashMap" resultType="Product">
+        SELECT *
+        FROM(
+            SELECT prod_id
+            ,prod_name
+            ,prod_price
+            ,spec
+            ,model_name
+            ,DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%S') reg_date
+            FROM products
+        ) T1
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countAllProducts" resultType="java.lang.Integer">
+        SELECT COUNT(prod_id)
+        FROM products
+    </select>
+
+    <insert id="insertProduct" parameterType="Product">
+        INSERT INTO products (prod_name, prod_price, reg_date, spec, model_name)
+        VALUES (#{prodName}, #{prodPrice}, now(), #{spec}, #{modelName})
+    </insert>
+
+    <update id="updateProduct" parameterType="Product">
+        UPDATE products
+        <set>
+            <if test="prodName != null"> prod_name = #{prodName},</if>
+            <if test="prodPrice != null"> prod_price = #{prodPrice}, </if>
+            <if test="spec != null"> spec = #{spec}, </if>
+            <if test="modelName != null"> model_name = #{modelName}, </if>
+        </set>
+        WHERE prod_id = #{prodId}
+    </update>
+
+</mapper>
