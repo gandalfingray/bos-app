@@ -5,8 +5,8 @@
 
 <mapper namespace="com.mintit.bos.comcode.persistence.CommCodeMapper">
 
-    <select id="selectComCodeByCodeGrp" resultType="CommCode">
-        SELECT comm_cd_grp
+    <sql id="selectCommCode">
+            comm_cd_grp
             ,comm_cd
             ,comm_nm
             ,ref_cd1
@@ -27,8 +27,26 @@
               from tsycd_comm_cd_dtl
               where comm_cd_grp = a.comm_cd ) children
         FROM tsycd_comm_cd_dtl a
+    </sql>
+
+    <select id="selectComCodeByCodeGrp" resultType="CommCode">
+        SELECT /* selectComCodeByCodeGrp */
+        <include refid = "selectCommCode" />
         WHERE comm_cd_grp = #{commCdGrp}
+        ORDER BY sort_no
     </select>
+
+    <select id="selectCommCodesFromGrpCodeList" resultType="CommCode" parameterType="TreeListRequestData">
+            SELECT /* selectCommCodesFromGrpCodeList */
+            <include refid = "selectCommCode" />
+            <if test="parentIds!=null">
+                WHERE comm_cd_grp in
+                <foreach collection="parentIds" item="code" index="index" separator="," open="(" close=")">
+                    #{code}
+                </foreach>
+            </if>
+            ORDER BY sort_no
+        </select>
 
     <select id="selectAll" resultType="CommCode">
         SELECT comm_cd_grp
@@ -137,4 +155,8 @@
         WHERE comm_cd = #{commCd}
     </update>
 
+    <delete id="deleteCommCode" parameterType="java.lang.String">
+        DELETE FROM tsycd_comm_cd_dtl
+        WHERE comm_cd = #{commCd}
+    </delete>
 </mapper>

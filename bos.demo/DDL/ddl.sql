@@ -1,4 +1,4 @@
-
+create database mybos;
 
 drop table tsycd_comm_cd_dtl;
 create table tsycd_comm_cd_dtl (
