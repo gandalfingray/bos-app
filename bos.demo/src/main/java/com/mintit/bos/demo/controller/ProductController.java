@@ -80,7 +80,7 @@ public class ProductController {
 
         PagedGrid<Product> pagedGrid = new PagedGrid<Product>();
         pagedGrid.setPageInfo(map);
-        pagedGrid.setTotalItems((productService.countAllProducts()));
+        pagedGrid.setTotalItems((productService.countAllProducts(map)));
 
         logger.debug("parameters are " + map.toString());
 
@@ -95,7 +95,7 @@ public class ProductController {
         //PagedGrid<Product> pagedGrid = new PagedGrid<Product>();
         Map map = pagedGrid.getPageInfo();
 
-        pagedGrid.setTotalItems((productService.countAllProducts()));
+        pagedGrid.setTotalItems((productService.countAllProducts(map)));
 
         logger.debug("[getProductWithinAPage] parameters are " + map.toString());
 

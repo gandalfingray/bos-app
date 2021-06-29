@@ -9,17 +9,12 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FilterNode {
-    public FilterNode(String operator){
-        nodeType = "operator";
-        this.operator = operator;
+public abstract class FilterNode {
+    public FilterNode(String nodeType){
+        this.nodeType = nodeType;
     };
-    public FilterNode(List condition){
-        nodeType = "condition";
-        this.filterCondition = new FilterCondition(condition);
-    }
 
-    private String nodeType; // operator or condition
-    private String operator;
-    private FilterCondition filterCondition;
+    public abstract String assembleSearchCondition();
+
+    protected String nodeType; // operator or condition
 }

@@ -36,13 +36,19 @@
             ,model_name
             ,DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%S') reg_date
             FROM products
+            <if test="searchCondition != null">
+                where ${searchCondition}
+            </if>
         ) T1
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <select id="countAllProducts" resultType="java.lang.Integer">
+    <select id="countAllProducts" resultType="java.lang.Integer" parameterType="java.util.HashMap">
         SELECT COUNT(prod_id)
         FROM products
+        <if test="searchCondition != null">
+            where ${searchCondition}
+        </if>
     </select>
 
     <insert id="insertProduct" parameterType="Product">

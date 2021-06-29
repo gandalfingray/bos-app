@@ -27,11 +27,21 @@ public class PagedGrid<T> {
     private Integer offset = 0;
     private Integer limit = 10;
 
+    // Parameter Name
     private List filter;
-    private List<FilterNode> filterNodes;
+
+    // Parameter filter is conversed into filterNode
+    @Setter(AccessLevel.PRIVATE)
+    private FilterNode filterNode;
+
+    // filterNode is conversed into Search Condition String for SQL Generation
+    // searchCondition 은 computed value 이므로 setter 를 두지 않는다.
+    @Setter(AccessLevel.PRIVATE)
+    private String searchCondition;
 
     // Grid data
     private List<T> items;
+
 
     public void setPageNo(Integer pageNo){
         this.pageNo = pageNo;
@@ -73,41 +83,20 @@ public class PagedGrid<T> {
 
     public Map getPageInfo(){
         Map map = new HashMap();
+
         map.put("limit", this.limit);
         map.put("offset", this.offset);
+        if(this.searchCondition != null)
+            map.put("searchCondition", this.searchCondition);
 
         return map;
     }
 
     public void setFilter(List filter) {
-
         this.filter = filter;
-        int size = filter.size();
-        Predicate predicate = (m) -> {
-            return m instanceof String;
-        };
-
-        filterNodes = new ArrayList<FilterNode>();
-
-        /*
-         filter가 ["fieldname", "=", "fieldvalue"] 이런 형상이라면,
-         List이지만 1개의 filter node로 구성된 filter이므로 1개짜리 filterNode를 만들고 끝낸다.
-        */
-        if(predicate.test(filter.get(0))){
-            filterNodes.add(new FilterNode(filter));
-            return;
-         }
-
-        /*
-         filter 형상이 [List, String, List, String, List] 같은 경우,
-         List 는 condition type의 FilterNode이고, String은 operator type의 FilterNode
-        */
-        for (int i = 0 ; i < size ; i++){
-            filterNodes.add(predicate.test(filter.get(i))?
-                    new FilterNode((String)filter.get(i)):new FilterNode((List)filter.get(i)));
-        }
-
-        filterNodes.forEach(item -> System.out.println(item.getNodeType()));
+        this.filterNode = FilterNodeFactory.createFilterNode(filter);
+        this.searchCondition = this.filterNode.assembleSearchCondition();
+        System.out.println(searchCondition);
     }
 
 }

@@ -12,7 +12,7 @@ public interface ProductMapper {
     Product selectProductById(Long prodId);
     List<Product> selectAllProducts();
     List<Product> selectProductsWithinAPage(Map map);
-    Integer countAllProducts();
+    Integer countAllProducts(Map map);
     void insertProduct(Product product);
     void updateProduct(Product product);
 

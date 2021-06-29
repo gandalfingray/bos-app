@@ -29,8 +29,8 @@ public class ProductService {
         return productMapper.selectProductsWithinAPage(map);
     }
 
-    public Integer countAllProducts(){
-        return productMapper.countAllProducts();
+    public Integer countAllProducts(Map map){
+        return productMapper.countAllProducts(map);
     }
 
     @Transactional

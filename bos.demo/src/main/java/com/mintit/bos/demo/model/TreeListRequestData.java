@@ -28,20 +28,20 @@ public class TreeListRequestData {
     private List<String> parentIds;
 
     public void setFilters(List filters) {
-
-        this.filters = filters;
-        int size = filters.size();
-        Predicate predicate = (m) -> {
-            return m instanceof String;
-        };
-
-        filterNodes = new ArrayList<FilterNode>();
-        for (int i = 0 ; i < size ; i++){
-            filterNodes.add(predicate.test(filters.get(i))?
-                    new FilterNode((String)filters.get(i)):new FilterNode((List)filters.get(i)));
-        }
-
-        System.out.println("filtreNodes are " + filterNodes.size());
+//
+//        this.filters = filters;
+//        int size = filters.size();
+//        Predicate predicate = (m) -> {
+//            return m instanceof String;
+//        };
+//
+//        filterNodes = new ArrayList<FilterNode>();
+//        for (int i = 0 ; i < size ; i++){
+//            filterNodes.add(predicate.test(filters.get(i))?
+//                    new FilterNode((String)filters.get(i)):new FilterNode((List)filters.get(i)));
+//        }
+//
+//        System.out.println("filtreNodes are " + filterNodes.size());
     }
 
 }
