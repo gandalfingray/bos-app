@@ -16,6 +16,7 @@ public class Product {
     private String prodName;
     private Integer prodPrice;
     private String modelName;
+    private String prodType;
     private String spec;
     private Date regDate;
 

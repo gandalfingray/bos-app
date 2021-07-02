@@ -39,8 +39,12 @@ public class PagedGrid<T> {
     @Setter(AccessLevel.PRIVATE)
     private String searchCondition;
 
+    // Sort
+    private List<HashMap> sort;
+
     // Grid data
     private List<T> items;
+
 
 
     public void setPageNo(Integer pageNo){
@@ -81,6 +85,22 @@ public class PagedGrid<T> {
         this.limit = take;
     }
 
+    public void setSort(List<Map> sort){
+        if(sort == null)
+            return;
+
+        this.sort = new ArrayList<HashMap>();
+
+        int i=0;
+        for(Map sortItem : sort){
+            HashMap sortCondition = new HashMap();
+            sortCondition.put("selector",((String)sortItem.get("selector")).replaceAll("([A-Z]+)","\\_$1").toLowerCase());
+            sortCondition.put("desc", sortItem.get("desc"));
+            this.sort.add(i, sortCondition);
+            i++;
+        }
+    }
+
     public Map getPageInfo(){
         Map map = new HashMap();
 
@@ -88,6 +108,9 @@ public class PagedGrid<T> {
         map.put("offset", this.offset);
         if(this.searchCondition != null)
             map.put("searchCondition", this.searchCondition);
+
+        if(this.sort != null)
+            map.put("sort", this.sort);
 
         return map;
     }

@@ -17,4 +17,5 @@ public interface CommCodeMapper {
     void insertCommCode(CommCode commCode);
     void updateCommCode(CommCode commCode);
     void deleteCommCode(String commCd);
+    CommCode selectComCodeById(String commCd);
 }

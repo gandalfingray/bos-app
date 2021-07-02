@@ -24,6 +24,10 @@
 	- 등
  
   - 공통 함수(Utility)
+    - 공통 코드 조회용 DataSource 반환 모듈(완료) -> Lookup 셀 선택 시 코드 값이 보이는 문제 해결 필요
+  
+  - 공통 기능
+    - Grid 엑셀 열 복사/그리드 붙이기
   
 #### API I/O 표준
   - API 호출 공통 모듈 for UI
@@ -36,7 +40,11 @@
 
 #### 메시지 처리
 
-#### API 실행 로그 처리(Filter or Interceptor..)  - API 접근자, 호출 URL, input parameter data( 부분 암호화 필요...), 수행 일시, 조회 결과도 저장 필요한가? 암호화해서...(?)
+#### 외부 HTTP 서비스 호출(다른 Microservice 호출)
+
+
+#### API 실행 로그 처리(Filter or Interceptor..)
+  - API 접근자, 호출 URL, input parameter data( 부분 암호화 필요...), 수행 일시, 조회 결과도 저장 필요한가? 암호화해서...(?)
 
 #### 사용자 관리 및 로그인 화면/API
   - 사용자 등록 요청 화면

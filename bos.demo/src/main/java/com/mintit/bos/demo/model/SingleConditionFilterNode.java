@@ -14,14 +14,14 @@ import java.util.List;
         fields
         comparator
         value
- */
+*/
 
 @Getter
 @Setter
 public class SingleConditionFilterNode extends FilterNode {
     private String field;
     private String comparator;
-    private Object value;
+    private Object value;   // String 일 수도 있고 Number type 객체(Integer ...)일 수도 있음
 
     public SingleConditionFilterNode(List condition){
         super("SingleConditionNode");

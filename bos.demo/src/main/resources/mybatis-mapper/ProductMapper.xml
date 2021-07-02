@@ -8,6 +8,7 @@
     <select id="selectProductById" resultType="Product">
         SELECT prod_id
         ,prod_name
+        ,prod_type
         ,prod_price
         ,spec
         ,model_name
@@ -19,6 +20,7 @@
     <select id="selectAllProducts" resultType="Product">
         SELECT prod_id
         ,prod_name
+        ,prod_type
         ,prod_price
         ,spec
         ,model_name
@@ -31,6 +33,7 @@
         FROM(
             SELECT prod_id
             ,prod_name
+            ,prod_type
             ,prod_price
             ,spec
             ,model_name
@@ -40,6 +43,12 @@
                 where ${searchCondition}
             </if>
         ) T1
+        <if test="sort != null">
+            order by
+            <foreach collection="sort" item="item" separator=",">
+                ${item.selector} <if test="item.desc"> desc </if>
+            </foreach>
+        </if>
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
@@ -52,8 +61,8 @@
     </select>
 
     <insert id="insertProduct" parameterType="Product">
-        INSERT INTO products (prod_name, prod_price, reg_date, spec, model_name)
-        VALUES (#{prodName}, #{prodPrice}, now(), #{spec}, #{modelName})
+        INSERT INTO products (prod_name, prod_price, prod_type, reg_date, spec, model_name)
+        VALUES (#{prodName}, #{prodPrice}, #{prodType}, now(), #{spec}, #{modelName})
     </insert>
 
     <update id="updateProduct" parameterType="Product">
@@ -61,6 +70,7 @@
         <set>
             <if test="prodName != null"> prod_name = #{prodName},</if>
             <if test="prodPrice != null"> prod_price = #{prodPrice}, </if>
+            <if test="prodType != null"> prod_type = #{prodType}, </if>
             <if test="spec != null"> spec = #{spec}, </if>
             <if test="modelName != null"> model_name = #{modelName}, </if>
         </set>

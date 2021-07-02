@@ -29,6 +29,12 @@
         FROM tsycd_comm_cd_dtl a
     </sql>
 
+    <select id="selectComCodeById" resultType="CommCode">
+        SELECT /* selectComCodeById */
+        <include refid = "selectCommCode" />
+        WHERE comm_cd = #{commCd}
+    </select>
+
     <select id="selectComCodeByCodeGrp" resultType="CommCode">
         SELECT /* selectComCodeByCodeGrp */
         <include refid = "selectCommCode" />
@@ -37,16 +43,16 @@
     </select>
 
     <select id="selectCommCodesFromGrpCodeList" resultType="CommCode" parameterType="TreeListRequestData">
-            SELECT /* selectCommCodesFromGrpCodeList */
-            <include refid = "selectCommCode" />
-            <if test="parentIds!=null">
-                WHERE comm_cd_grp in
-                <foreach collection="parentIds" item="code" index="index" separator="," open="(" close=")">
-                    #{code}
-                </foreach>
-            </if>
-            ORDER BY sort_no
-        </select>
+        SELECT /* selectCommCodesFromGrpCodeList */
+        <include refid = "selectCommCode" />
+        <if test="parentIds!=null">
+            WHERE comm_cd_grp in
+            <foreach collection="parentIds" item="code" index="index" separator="," open="(" close=")">
+                #{code}
+            </foreach>
+        </if>
+        ORDER BY sort_no
+    </select>
 
     <select id="selectAll" resultType="CommCode">
         SELECT comm_cd_grp

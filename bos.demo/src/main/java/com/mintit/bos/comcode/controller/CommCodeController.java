@@ -54,6 +54,14 @@ public class CommCodeController {
         return ResponseEntity.ok().body(commCodes);
     }
 
+    @GetMapping("/commCode/{commCd}")
+    public ResponseEntity<CommCode> getComCodeById(@PathVariable("commCd") String commCd){
+        logger.debug("Select a Common Code By Key...");
+
+        CommCode commCode = mapper.selectComCodeById(commCd);
+        return ResponseEntity.ok().body(commCode);
+    }
+
     /*
         curl -v -X POST  -H "Content-Type: application/json" --cookie "SESSION=NWFlYzdkM2MtNDlkMS00NDkzLTkwYWQtOTAyZGYyMThmNTFm" -d "{\"commCdGrp\": \"root\", \"commCd\" : \"CD999\", \"commNm\" : \"TEST Code\", \"defltYn\" : \"Y\", \"useYn\" : \"Y\", \"sysUseYn\" : \"Y\"}" http://localhost:9091/commCode
     */
