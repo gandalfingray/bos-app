@@ -23,8 +23,11 @@
 	- 전화번호 : 지역번호 선택, 통신사 선택
 	- 등
  
+  - 공통 Popup
+    - 주소 선택
+    
   - 공통 함수(Utility)
-    - 공통 코드 조회용 DataSource 반환 모듈(완료) -> Lookup 셀 선택 시 코드 값이 보이는 문제 해결 필요
+    - 공통 코드 조회용 DataSource 반환 모듈(완료) -> Lookup 셀 선택 시 코드 값이 보이는 문제 해결 필요(해결)
   
   - 공통 기능
     - Grid 엑셀 열 복사/그리드 붙이기
@@ -39,6 +42,11 @@
 	- 그외의 에러는 메시지를 화면에 띄운다.
 
 #### 메시지 처리
+
+#### 암호화
+  - 비밀번호 저장(단방향 Hash 암호화)
+  - 개인정보 관련 데이터 암호화(양방향 암복호화)
+  - AWS 환경 설정 KMS 사용 DB 계정/비밀번호 암호화(applicatiom.yml 파일)
 
 #### 외부 HTTP 서비스 호출(다른 Microservice 호출)
 
@@ -61,6 +69,15 @@
 
 
 
-#### how to apply designed style to DevExtreme...
-
+#### HTML Templating 작업
+  - 목록 type 1 : 조회조건 + DataGrid
+  - 목록 type 2 : 조회조건 + DateGrid 자체 Control(추가, 저장, 취소, 검색) + DataGrid
+  - 목록 type 3 : DateGrid 자체 Control(추가, 저장, 취소, 검색) + DataGrid 
+  - 상세 type 1 : 목록 => Modal Popup(저장, 삭제) : 2 column type
+  - 상세 type 1-1 : 목록 => Modal Popup(저장, 삭제) : 3 column type
+  - 상세 type 2 : Menu => 상세 화면 : 2 column type
+  - 상세 type 2-1 : Menu => 상세 화면 : 3 column type
+  - 목록 + 상세 type 1 : 조회조건 + Master DataGrid + Detail DatGrid (조회조건은 Master에만 해당)
+  - Component 모음 page
+  
 - and so on .....
